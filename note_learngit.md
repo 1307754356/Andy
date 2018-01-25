@@ -43,7 +43,7 @@
 >>**若想保留此文件**，使用**git checkout -- file**来撤销工作区的修改
 
 ##	8.远程仓库
->####关联仓库
+>####	关联仓库
 >要关联一个远程库，使用命令**git remote add origin git@server-name:path/repo-name.git**
 >> 举例：**git@github.com:1307754356/again.git**
 >>>**again**是版本库名，**1307754356**是用户名，要注意最后的 **.git**
