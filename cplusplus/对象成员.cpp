@@ -15,6 +15,8 @@ class Coordinate
 public:
     //构造函数初始化点 （此处使用了列表初始化）
     //注：若采用类外定义的方式，在声明的时候不能列表初始化
+    //最后打印出的结果中最先打印的两行（Coordinte）
+    //证明了是先创建点，后创建线段的
     Coordinate(int x,int y): m_iX(x),m_iY(y)
     {
         cout << "Coordinate" << endl;
