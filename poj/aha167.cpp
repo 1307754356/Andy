@@ -45,10 +45,11 @@ int main() {
 		for(int j=1; j<=n; j++) {
 			if(book[j]==0 && dis[j]<mmin) {
 				mmin=dis[j];
-				book[j]=1;
+				
 				u=j;
 			}
 		}
+		book[u]=1;
 		//然后将这个最近的元素尝试插入1和其他元素中
 		for(int k=1; k<=n; k++) {
 			if(e[u][k]<INF && dis[k]>dis[u]+e[u][k])
