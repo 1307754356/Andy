@@ -34,19 +34,17 @@ void s_Fix(void) {
     int Fix_num;
     int Fix_flag = 1;
     if(head != NULL) {
-        struct student *Fix_cur = head;
         system("cls");
         printf("请输入修改的学号：\n");
         scanf("%d", &Fix_num);
-        do {
-            if(Fix_num == Fix_cur->num) {
-                s_Fix_detail(Fix_cur);
-                Fix_flag = 0;
-            } else
-                Fix_cur = Fix_cur->next;
-        } while(Fix_cur != NULL && Fix_flag);
-        if(Fix_flag)
+        getchar();
+        struct student *Fix_stu = s_Check(Fix_num);
+        if(Fix_stu == NULL) {
             printf("查无此人！请重新输入！\n") ;
+            getchar();
+        } else {
+            s_Fix_detail(Fix_stu);
+        }
     } else {
         printf("数据库为空！按任意键返回选择界面\n");
         getchar();
@@ -75,6 +73,7 @@ void s_Output(struct student *Fix_stu) {
         printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2]) ;
         Fix_stu = Fix_stu->next;
     }
+
 }
 
 //添加函数
@@ -95,19 +94,13 @@ void s_Add(void) {
         prev->next = NULL;
     }
     int Add_num, Add_flag = 1;
-    struct student *Add_search;
     while(Add_flag) {
-        Add_search = head;
         printf("请输入学生的学号\n");//输入范围？
         scanf("%d", &Add_num);
         getchar();
-        while(Add_search != NULL) {
-            if(Add_search->num == Add_num) {
-                printf("该学号已存在！请重新输入！\n");
-                Add_flag = 0;
-                break;
-            }
-            Add_search = Add_search->next;
+        if(s_Check(Add_num) != NULL) {
+            printf("该学号已存在！\n");
+            Add_flag = 0;
         }
         if(!Add_flag)
             Add_flag = 1;
@@ -131,7 +124,7 @@ void s_Add(void) {
     scanf("%lf%lf%lf", &prev->score[0], &prev->score[1], &prev->score[2]);
     prev->sum = prev->score[0] + prev->score[1] + prev->score[2];
     prev->ave = prev->sum / 3.0;
-    // rewind(add_file);
+// rewind(add_file);
     s_Write();
 }
 
@@ -150,18 +143,16 @@ void s_Write(void) {
     fclose(write_file);
 }
 //检查函数
-struct student* s_Check(int Check_num)
-{
-   struct  student * check_p = head;
-   while(check_p != NULL)
-   {
-       if(check_p->num == Check_num)
+struct student* s_Check(int Check_num) {
+    struct  student * check_p = head;
+    while(check_p != NULL) {
+        if(check_p->num == Check_num)
             break;
-   }
+        check_p = check_p->next;
+    }
     return check_p;
 }
 
-void s_Exit(void)
-{
-   Exit_flag=0;
+void s_Exit(void) {
+    Exit_flag = 0;
 }
