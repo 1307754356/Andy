@@ -2,8 +2,8 @@
 #include"functions.h"
 int main() {
     int choice;
-    while(1) {
-
+    while(Exit_flag) {
+        system("cls");
         s_Init();
         printf("请选择：\n");
         scanf("%d", &choice);
@@ -15,11 +15,8 @@ int main() {
         case 2:
             s_Init();
             break;
-        case 3:
-            return 0;
-
 //        case 3: s_Del();break;
-        case 4: s_Output(head);break;
+        case 4: s_Output(head);break;//目前先打印全部
 
         case 5: s_Fix();break;
 //        case 5: s_Search();break;
@@ -27,7 +24,7 @@ int main() {
 //        case 7: s_Statistic();break;
 //        case 8: s_Reset();break;
 //        case 9: s_Help();break;
-//        case 10: s_Exit();break;
+         case 10: s_Exit();break;
         }
     }
     return 0;

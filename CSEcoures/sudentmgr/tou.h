@@ -19,6 +19,8 @@ struct student                                 /*定义学生结构体*/
         struct student *next;
     };
 
+int Exit_flag=1;
+
 struct student *head=NULL,*prev,*tail;
 
 void s_Init(void);
@@ -35,4 +37,4 @@ void s_Reset(void);
 void s_Help(void);
 void s_Exit(void);
 
-
+struct student* s_Check(int Check_num);//频繁调用，故另建为函数

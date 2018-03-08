@@ -1,3 +1,4 @@
+//初始化函数
 void s_Init(void) {
     FILE *init_file;
     if((init_file = fopen("stu_data.txt", "rb")) == NULL) {
@@ -27,6 +28,8 @@ void s_Init(void) {
         printf("初始化成功！\n");
     }
 }
+
+//修改信息
 void s_Fix(void) {
     int Fix_num;
     int Fix_flag = 1;
@@ -50,16 +53,7 @@ void s_Fix(void) {
         return ;
     }
 }
-
-void s_Output(struct student *Fix_stu) {
-    //后续添加另一个参数以输出表头表尾
-    printf("┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆\n");
-    printf("学号       姓名      性别     民族       语文       数学       英语     总分    平均分     \n");
-    while(Fix_stu != NULL) {
-        printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2]) ;
-        Fix_stu = Fix_stu->next;
-    }
-}
+//修改细节
 void s_Fix_detail(struct student *stu) {
     char detail_flag;
     printf("您确定要修改“ %d %s ”的信息吗\n（输入 y or n）\n", stu->num, stu->name);
@@ -71,11 +65,19 @@ void s_Fix_detail(struct student *stu) {
     }
 }
 
-//
-//
-//
-//
-//}
+
+//打印函数
+void s_Output(struct student *Fix_stu) {
+    //后续添加另一个参数以输出表头表尾
+    printf("┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆\n");
+    printf("学号       姓名      性别     民族       语文       数学       英语     总分    平均分     \n");
+    while(Fix_stu != NULL) {
+        printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2]) ;
+        Fix_stu = Fix_stu->next;
+    }
+}
+
+//添加函数
 void s_Add(void) {
     FILE *add_file;
     if((add_file = fopen("stu_data.txt", "ab")) == NULL) {
@@ -132,6 +134,8 @@ void s_Add(void) {
     // rewind(add_file);
     s_Write();
 }
+
+//写入函数
 void s_Write(void) {
     FILE *write_file;
     struct student *Write_cur = head;
@@ -144,4 +148,20 @@ void s_Write(void) {
         Write_cur = Write_cur->next;
     }
     fclose(write_file);
+}
+//检查函数
+struct student* s_Check(int Check_num)
+{
+   struct  student * check_p = head;
+   while(check_p != NULL)
+   {
+       if(check_p->num == Check_num)
+            break;
+   }
+    return check_p;
+}
+
+void s_Exit(void)
+{
+   Exit_flag=0;
 }
