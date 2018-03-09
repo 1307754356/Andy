@@ -56,10 +56,48 @@ void s_Fix_detail(struct student *stu) {
     char detail_flag;
     printf("您确定要修改“ %d %s ”的信息吗\n（输入 y or n）\n", stu->num, stu->name);
     scanf("%c", &detail_flag);
-    switch(detail_flag) {
-    case 'Y':
-    case 'y':
-        printf("请输入学生的");
+    while(detail_flag == 'y' || detail_flag == 'Y') {
+        system("cls");
+        s_Output(stu);
+        int detail_choice;
+        printf("您可修改以下内容：\n1.学号\n2.姓名\n3.性别\n4.民族\n5.语文\n6.数学\n7.英语\n输入‘8’以退出\n");
+        scanf("%d", &detail_choice);
+        getchar();
+        switch(detail_choice) {
+        case 1:
+            while(1) {
+                int detail_new_num;
+                printf("请输入新学号(请不要与已有学号重合！)");
+                scanf("%d", &detail_new_num);
+                if(s_Check(detail_new_num) == NULL) {
+                    stu->num = detail_new_num;
+                    break;
+                }
+                printf("该学号已存在！请重新输入!\n");
+            }
+
+        case 2:
+            printf("请输入新姓名：\n"); gets(stu->name);
+            break;
+        case 3:
+            printf("请输入新性别：\n") ;scanf("%c", &stu->sex);
+            break;
+        case 4:
+            printf("请输入新民族：\n") ;gets(stu->minzu);
+            break;
+        case 5:
+            printf("请输入新语文成绩：\n"); scanf("%lf", &stu->score[0]);
+            break;
+        case 6:
+            printf("请输入新数学成绩：\n"); scanf("%lf", &stu->score[1]);
+            break;
+        case 7:
+            printf("请输入新英语成绩：\n") ;scanf("%lf", &stu->score[2]);
+            break;
+        case 8:
+            return ;
+        }
+
     }
 }
 
