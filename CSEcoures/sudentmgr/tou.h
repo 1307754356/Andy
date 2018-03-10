@@ -20,8 +20,8 @@ struct student                                 /*定义学生结构体*/
     };
 
 int Exit_flag=1;
-
-struct student *head=NULL,*prev,*tail;
+int Out_put_num;
+struct student *head=NULL,*prev=NULL,*tail=NULL;
 
 void s_Init(void);
 void s_Write(void);

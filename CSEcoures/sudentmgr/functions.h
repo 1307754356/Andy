@@ -6,8 +6,9 @@ void s_Init(void) {
         exit(0);
     }
     //判断是否为空
+    //45744320
     prev = (struct student*)malloc(sizeof(struct student));
-    if(!fread(prev, sizeof(struct student), 1, init_file)) {
+    if(fread(prev, sizeof(struct student), 1, init_file) != 1) {
         fclose(init_file);
         free(prev);
         prev = NULL;
@@ -25,14 +26,14 @@ void s_Init(void) {
         fclose(init_file);
         free(prev);
         prev = tail;
+        tail ->next =NULL;
         printf("初始化成功！\n");
     }
 }
 
 //修改信息
 void s_Fix(void) {
-    int Fix_num;
-    int Fix_flag = 1;
+    int Fix_num;;
     if(head != NULL) {
         system("cls");
         printf("请输入修改的学号：\n");
@@ -77,22 +78,28 @@ void s_Fix_detail(struct student *stu) {
             }
 
         case 2:
-            printf("请输入新姓名：\n"); gets(stu->name);
+            printf("请输入新姓名：\n");
+            gets(stu->name);
             break;
         case 3:
-            printf("请输入新性别：\n") ;scanf("%c", &stu->sex);
+            printf("请输入新性别：\n") ;
+            scanf("%c", &stu->sex);
             break;
         case 4:
-            printf("请输入新民族：\n") ;gets(stu->minzu);
+            printf("请输入新民族：\n") ;
+            gets(stu->minzu);
             break;
         case 5:
-            printf("请输入新语文成绩：\n"); scanf("%lf", &stu->score[0]);
+            printf("请输入新语文成绩：\n");
+            scanf("%lf", &stu->score[0]);
             break;
         case 6:
-            printf("请输入新数学成绩：\n"); scanf("%lf", &stu->score[1]);
+            printf("请输入新数学成绩：\n");
+            scanf("%lf", &stu->score[1]);
             break;
         case 7:
-            printf("请输入新英语成绩：\n") ;scanf("%lf", &stu->score[2]);
+            printf("请输入新英语成绩：\n") ;
+            scanf("%lf", &stu->score[2]);
             break;
         case 8:
             return ;
@@ -105,22 +112,27 @@ void s_Fix_detail(struct student *stu) {
 //打印函数
 void s_Output(struct student *Fix_stu) {
     //后续添加另一个参数以输出表头表尾
+    if(Fix_stu == NULL) {
+        printf("信息为空！\n");
+        return ;
+    }
     printf("┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆\n");
-    printf("学号       姓名      性别     民族       语文       数学       英语     总分    平均分     \n");
+    printf("学号       姓名      性别     民族       语文       数学       英语       总分       平均分     \n");
     while(Fix_stu != NULL) {
-        printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2]) ;
-        Fix_stu = Fix_stu->next;
+        printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2], Fix_stu->sum, Fix_stu->ave) ;
+        Fix_stu = Fix_stu -> next;
+        Out_put_num++;
     }
 
 }
 
 //添加函数
 void s_Add(void) {
-    FILE *add_file;
-    if((add_file = fopen("stu_data.txt", "ab")) == NULL) {
-        printf("input Error!\n");
-        exit(0);
-    }
+//    FILE *add_file;
+//    if((add_file = fopen("stu_data.txt", "ab")) == NULL) {
+//        printf("input Error!\n");
+//        exit(0);
+//    }
     if(head == NULL) {
         head = (struct student*)malloc(sizeof(struct student));
         prev = head;
@@ -162,6 +174,7 @@ void s_Add(void) {
     scanf("%lf%lf%lf", &prev->score[0], &prev->score[1], &prev->score[2]);
     prev->sum = prev->score[0] + prev->score[1] + prev->score[2];
     prev->ave = prev->sum / 3.0;
+
 // rewind(add_file);
     s_Write();
 }
@@ -170,9 +183,9 @@ void s_Add(void) {
 void s_Write(void) {
     FILE *write_file;
     struct student *Write_cur = head;
-    if((write_file = fopen("stu_data.txt", "wb")) == NULL) {
+    if((write_file = fopen("stu_data.txt", "w+b")) == NULL) {
         printf("写入失败！\n");
-        exit(0);
+        exit(1);
     }
     while(Write_cur != NULL) {
         fwrite(Write_cur, sizeof(struct student), 1, write_file);

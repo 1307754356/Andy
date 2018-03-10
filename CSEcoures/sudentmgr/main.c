@@ -1,12 +1,14 @@
 #include"tou.h"
 #include"functions.h"
 int main() {
+    system("color 0A");
     int choice;
+    s_Init();
     while(Exit_flag) {
         system("cls");
-        s_Init();
         printf("请选择：\n");
         scanf("%d", &choice);
+
         getchar();
         switch(choice) {
         case 1:
@@ -18,6 +20,7 @@ int main() {
 //        case 3: s_Del();break;
         case 4:
             s_Output(head);
+            printf("%d\n",Out_put_num);
             break;//目前先打印全部
 
         case 5:
@@ -33,6 +36,7 @@ int main() {
             s_Exit();
             break;
         }
+        s_Write();
         getchar();
     }
     return 0;
