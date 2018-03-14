@@ -1,12 +1,34 @@
 //初始化函数
-void s_Init(void) {
+void s_Init(int init_choice) {
     FILE *init_file;
-    if((init_file = fopen("stu_data.txt", "rb")) == NULL) {
-        printf("Init Error!\n");
-        exit(0);
+    switch(init_choice) {
+    case 1:
+        if((init_file = fopen("stu_data_reset1.txt", "rb")) == NULL) {
+            printf("Init Error!\n");
+            exit(0);
+        }
+        break;
+    case 2:
+        if((init_file = fopen("stu_data_reset2.txt", "rb")) == NULL) {
+            printf("Init Error!\n");
+            exit(0);
+        }
+        break;
+    case 3:
+        if((init_file = fopen("stu_data_reset3.txt", "rb")) == NULL) {
+            printf("Init Error!\n");
+            exit(0);
+        }
+        break;
+    default:
+        if((init_file = fopen("stu_data.txt", "rb")) == NULL) {
+            printf("Init Error!\n");
+            exit(0);
+        }
+        break;
     }
-    //判断是否为空
-    //45744320
+
+//判断是否为空
     prev = (struct student*)malloc(sizeof(struct student));
     if(fread(prev, sizeof(struct student), 1, init_file) != 1) {
         fclose(init_file);
@@ -26,14 +48,13 @@ void s_Init(void) {
         fclose(init_file);
         free(prev);
         prev = tail;
-        tail ->next =NULL;
+        tail ->next = NULL;
         printf("初始化成功！\n");
     }
 }
-
 //修改信息
 void s_Fix(void) {
-    int Fix_num;;
+    int Fix_num;
     if(head != NULL) {
         system("cls");
         printf("请输入修改的学号：\n");
@@ -76,7 +97,6 @@ void s_Fix_detail(struct student *stu) {
                 }
                 printf("该学号已存在！请重新输入!\n");
             }
-
         case 2:
             printf("请输入新姓名：\n");
             gets(stu->name);
@@ -176,22 +196,193 @@ void s_Add(void) {
     prev->ave = prev->sum / 3.0;
 
 // rewind(add_file);
-    s_Write();
+    s_Write(0);
+}
+
+//删除函数
+void s_Del(void) {
+    int Del_num;
+    if(head != NULL) {
+        system("cls");
+        printf("请输入删除的学号：\n");
+        scanf("%d", &Del_num);
+        getchar();
+        struct student *Del_stu = s_Check(Del_num);
+        if(Del_stu == NULL) {
+            printf("查无此人！请重新输入！\n") ;
+            getchar();
+        } else {
+            printf("您确定要删除“ %d %s ”的信息吗\n（输入 y or n）\n", Del_stu->num, Del_stu->name);
+            char Del_flag;
+            scanf("%c", &Del_flag);
+            if(Del_flag == 'y' || Del_flag == 'Y') {
+                if(Del_stu == head) {
+                    head = Del_stu->next;
+                } else {
+                    struct student *Del_stu_pre = head;
+                    //  struct student *Del_stu_aft = Del
+                    while(Del_stu_pre->next != Del_stu) {
+                        Del_stu_pre = Del_stu_pre->next;
+                    }
+                    Del_stu_pre ->next = Del_stu->next;
+                    Del_stu ->next = NULL;
+                    free(Del_stu);
+                }
+
+                printf("删除成功！\n");
+            }
+        }
+    } else {
+        printf("数据库为空！按任意键返回选择界面\n");
+        getchar();
+        return ;
+    }
 }
 
 //写入函数
-void s_Write(void) {
+void s_Write(int write_choice) {
     FILE *write_file;
     struct student *Write_cur = head;
-    if((write_file = fopen("stu_data.txt", "w+b")) == NULL) {
-        printf("写入失败！\n");
-        exit(1);
+    switch(write_choice) {
+    case 1:
+        if((write_file = fopen("stu_data_reset1.txt", "w+b")) == NULL) {
+            printf("写入失败！\n");
+            exit(1);
+        }
+        break ;
+    case 2:
+        if((write_file = fopen("stu_data_reset2.txt", "w+b")) == NULL) {
+            printf("写入失败！\n");
+            exit(1);
+        }
+        break ;
+    case 3:
+        if((write_file = fopen("stu_data_reset3.txt", "w+b")) == NULL) {
+            printf("写入失败！\n");
+            exit(1);
+        }
+        break ;
+    default:
+        if((write_file = fopen("stu_data.txt", "w+b")) == NULL) {
+            printf("写入失败！\n");
+            exit(1);
+        }
+        break ;
     }
     while(Write_cur != NULL) {
         fwrite(Write_cur, sizeof(struct student), 1, write_file);
         Write_cur = Write_cur->next;
     }
     fclose(write_file);
+}
+void s_Reset(void) {
+    //记录存档记录时间
+//    FILE *reset_file_r;
+//    if(reset_file_r = fopen("stu_data_reset_time.txt", "rb") == NULL) {
+//        printf("RESET ERROR!\n");
+//        exit(0);
+//    }
+//    struct ROLL *reset_p_r = (struct ROLL*)malloc(sizeof(struct ROLL));
+//    if(fread(reset_p_r, sizeof(struct ROLL), 1, reset_file_r) != 1) {
+//        fclose(reset_file_r);
+//        free(reset_p_r);
+//        reset_p_r = NULL;
+//    }else{
+//        int reset_file_i;
+//        for(reset_file_i = 1;reset_file_i<4;reset_file_i++)
+//        {
+//            fread()
+//        }
+//    }
+    int reset_choice;
+    if((Back[1].roll_back = fopen("stu_data_reset1.txt", "rb")) == NULL) {
+        printf("1 Input Error!\n");
+        exit(0);
+    }
+    if((Back[2].roll_back = fopen("stu_data_reset2.txt", "rb")) == NULL) {
+        printf("2 Input Error!\n");
+        exit(0);
+    }
+    if((Back[3].roll_back = fopen("stu_data_reset3.txt", "rb")) == NULL) {
+        printf("3 Input Error!\n");
+        exit(0);
+    }
+    struct student *reset_prev = (struct student*)malloc(sizeof(struct student));
+    int roll_i ;
+    for(roll_i = 1; roll_i < 4; roll_i++) {
+        if(fread(reset_prev, sizeof(struct student), 1, Back[roll_i].roll_back) == 1)
+            Back[roll_i].reset_flag = 1;
+        rewind(Back[roll_i].roll_back);
+    }
+    free(reset_prev);
+    reset_prev = NULL;
+    for(roll_i = 1; roll_i < 4; roll_i++) {
+        printf("存档%d： ", roll_i);
+        if(Back[roll_i].reset_flag == 0)
+            printf("空\n");
+        else {
+            printf("%d/%d/%d %02d:%02d:%02d\n", Back[roll_i].reset_year, Back[roll_i].reset_month, Back[roll_i].reset_day, Back[roll_i].reset_hour, Back[roll_i].reset_min, Back[roll_i].reset_sec);
+        }
+    }
+    do {
+        printf("请选择：\n  1.备份\n  2.恢复\n  3.退出\n");
+        scanf("%d", &reset_choice);
+    } while(reset_choice < 1 || reset_choice > 3);
+    int reset_flag = 0;
+    switch(reset_choice) {
+    case 1:
+        system("cls");
+        printf("请输入要备份的区域:(1 or 2 or 3)\n");
+        int back_up_choice;
+        scanf("%d", &back_up_choice);
+        s_Write(back_up_choice);
+        time_t timep;
+        struct tm *tm_p;
+        time(&timep);
+        tm_p = localtime(&timep);
+        Back[reset_choice].reset_year  =   1900 + tm_p->tm_year;
+        Back[reset_choice].reset_month =   1 + tm_p->tm_mon;
+        Back[reset_choice].reset_day   =   tm_p->tm_mday;
+        Back[reset_choice].reset_hour  =   tm_p->tm_hour;
+        Back[reset_choice].reset_min   =   tm_p->tm_min;
+        Back[reset_choice].reset_sec   =   tm_p->tm_sec;
+        break;
+    case 2:
+        system("cls");
+        printf("请输入要恢复的区域(1 or 2 or 3):\n");
+        int roll_i;
+        scanf("%d", &roll_i);
+        //printf("您确定要读取存档%d吗？",roll_i);
+        s_clear();
+        s_Init(roll_i);
+        break;
+    case 3:
+        return ;
+    }
+//    FILE *reset_file_w;
+//    int reset_file_i;
+//    if(reset_file_w = fopen("stu_data_reset_time.txt", "wb") == NULL) {
+//        printf("RESET ERROR!\n");
+//        exit(0);
+//    }
+//    for(reset_file_i = 1; reset_file_i < 4; reset_file_i++) {
+//        fwrite(&Back[reset_file_i],sizeof(struct ROLL),1,reset_file_w);
+//    }
+
+}
+
+
+void s_clear(void) {
+    struct student *clr_p = head;
+    if(head == NULL)
+        return ;
+    while( clr_p->next != NULL) {
+        struct student *clr_q = head;
+        clr_p->next = clr_p->next->next;
+        free(clr_q);
+    }
+    free(clr_p);
+    head = NULL;
 }
 //检查函数
 struct student* s_Check(int Check_num) {
