@@ -18,18 +18,20 @@ int main() {
             break;
         case 4:
             s_Output(head);
-            printf("%d\n",Out_put_num);
+            printf("%d\n", Out_put_num);
             break;//目前先打印全部
-
         case 5:
             s_Fix();
             break;
-          case 6: s_Del();break;
+        case 6:
+            s_Del();
+            break;
 //        case 5: s_Search();break;
-//        case 6: s_Sort();break;
-
+        case 7: s_Sort();break;
 //        case 7: s_Statistic();break;
-        case 8: s_Reset();break;
+        case 8:
+            s_Reset();
+            break;
 //        case 9: s_Help();break;
         case 10:
             s_Exit();

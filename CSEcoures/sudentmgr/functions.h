@@ -52,6 +52,7 @@ void s_Init(int init_choice) {
         printf("初始化成功！\n");
     }
 }
+
 //修改信息
 void s_Fix(void) {
     int Fix_num;
@@ -127,7 +128,6 @@ void s_Fix_detail(struct student *stu) {
 
     }
 }
-
 
 //打印函数
 void s_Output(struct student *Fix_stu) {
@@ -275,25 +275,28 @@ void s_Write(int write_choice) {
     }
     fclose(write_file);
 }
+
+//备份函数
 void s_Reset(void) {
     //记录存档记录时间
-//    FILE *reset_file_r;
-//    if(reset_file_r = fopen("stu_data_reset_time.txt", "rb") == NULL) {
-//        printf("RESET ERROR!\n");
-//        exit(0);
-//    }
-//    struct ROLL *reset_p_r = (struct ROLL*)malloc(sizeof(struct ROLL));
-//    if(fread(reset_p_r, sizeof(struct ROLL), 1, reset_file_r) != 1) {
-//        fclose(reset_file_r);
-//        free(reset_p_r);
-//        reset_p_r = NULL;
-//    }else{
-//        int reset_file_i;
-//        for(reset_file_i = 1;reset_file_i<4;reset_file_i++)
-//        {
-//            fread()
-//        }
-//    }
+    FILE *reset_file_r;
+    if((reset_file_r = fopen("stu_data_reset_time.txt", "rb")) == NULL) {
+        printf("RESET ERROR!\n");
+        exit(0);
+    }
+    struct ROLL *reset_p_r = (struct ROLL*)malloc(sizeof(struct ROLL));
+    if(fread(reset_p_r, sizeof(struct ROLL), 1, reset_file_r) != 1) {
+        fclose(reset_file_r);
+        free(reset_p_r);
+        reset_p_r = NULL;
+    } else {
+        rewind(reset_file_r);
+        int reset_file_i;
+        for(reset_file_i = 1; reset_file_i < 4; reset_file_i++) {
+            fread(&Back[reset_file_i], sizeof(struct ROLL), 1, reset_file_r);
+        }
+    }
+    fclose(reset_file_r);
     int reset_choice;
     if((Back[1].roll_back = fopen("stu_data_reset1.txt", "rb")) == NULL) {
         printf("1 Input Error!\n");
@@ -328,7 +331,6 @@ void s_Reset(void) {
         printf("请选择：\n  1.备份\n  2.恢复\n  3.退出\n");
         scanf("%d", &reset_choice);
     } while(reset_choice < 1 || reset_choice > 3);
-    int reset_flag = 0;
     switch(reset_choice) {
     case 1:
         system("cls");
@@ -340,12 +342,12 @@ void s_Reset(void) {
         struct tm *tm_p;
         time(&timep);
         tm_p = localtime(&timep);
-        Back[reset_choice].reset_year  =   1900 + tm_p->tm_year;
-        Back[reset_choice].reset_month =   1 + tm_p->tm_mon;
-        Back[reset_choice].reset_day   =   tm_p->tm_mday;
-        Back[reset_choice].reset_hour  =   tm_p->tm_hour;
-        Back[reset_choice].reset_min   =   tm_p->tm_min;
-        Back[reset_choice].reset_sec   =   tm_p->tm_sec;
+        Back[back_up_choice].reset_year  =   1900 + tm_p->tm_year;
+        Back[back_up_choice].reset_month =   1 + tm_p->tm_mon;
+        Back[back_up_choice].reset_day   =   tm_p->tm_mday;
+        Back[back_up_choice].reset_hour  =   tm_p->tm_hour;
+        Back[back_up_choice].reset_min   =   tm_p->tm_min;
+        Back[back_up_choice].reset_sec   =   tm_p->tm_sec;
         break;
     case 2:
         system("cls");
@@ -359,19 +361,16 @@ void s_Reset(void) {
     case 3:
         return ;
     }
-//    FILE *reset_file_w;
-//    int reset_file_i;
-//    if(reset_file_w = fopen("stu_data_reset_time.txt", "wb") == NULL) {
-//        printf("RESET ERROR!\n");
-//        exit(0);
-//    }
-//    for(reset_file_i = 1; reset_file_i < 4; reset_file_i++) {
-//        fwrite(&Back[reset_file_i],sizeof(struct ROLL),1,reset_file_w);
-//    }
-
+    FILE *reset_file_w;
+    if((reset_file_w = fopen("stu_data_reset_time.txt", "wb")) == NULL) {
+        printf("RESET ERROR!\n");
+        exit(0);
+    }
+        fwrite(&Back[1],sizeof(struct ROLL),3,reset_file_w);
+    fclose(reset_file_w);
 }
 
-
+//清空链表
 void s_clear(void) {
     struct student *clr_p = head;
     if(head == NULL)
@@ -384,6 +383,17 @@ void s_clear(void) {
     free(clr_p);
     head = NULL;
 }
+void s_Sort(void)
+{
+    printf("排序界面：\n");
+    printf("请选择排序方式：\n");
+    printf("1.按总分排序\n");
+    printf("2.按学号排序\n");
+    printf("3.按姓名排序\n");
+    printf("4.按家庭住址排序\n");
+    printf("5.按学号排序\n");
+
+}
 //检查函数
 struct student* s_Check(int Check_num) {
     struct  student * check_p = head;
@@ -395,6 +405,7 @@ struct student* s_Check(int Check_num) {
     return check_p;
 }
 
+//退出函数
 void s_Exit(void) {
     Exit_flag = 0;
 }
