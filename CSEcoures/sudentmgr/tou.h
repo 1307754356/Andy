@@ -57,6 +57,8 @@ void s_Exit(void);
 
 int (*sort_fc_head)(struct student *A,struct student *B);
 
+int sort_order;
+
 struct student* s_Check(int Check_num);//频繁调用，故另建为函数
 
 int cmp1(struct student *A,struct student *B);

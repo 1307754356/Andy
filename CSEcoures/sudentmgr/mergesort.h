@@ -29,7 +29,7 @@ struct student *sortmerge( struct student *sort_head1, struct student *sort_head
     if(sort_head2 == NULL)
         return sort_head1;
     struct student *res, *p ;
-    if(sort_fc_head(sort_head1,sort_head2)) {
+    if(sort_fc_head(sort_head1,sort_head2)^sort_order) {
 
         res = sort_head1;
         sort_head1 = sort_head1->next;
@@ -40,7 +40,7 @@ struct student *sortmerge( struct student *sort_head1, struct student *sort_head
     p = res;
 
     while(sort_head1 != NULL && sort_head2 != NULL) {
-        if(sort_fc_head(sort_head1,sort_head2)) { //CMP修改的地方
+        if(sort_fc_head(sort_head1,sort_head2)^sort_order) { //CMP修改的地方
             p->next = sort_head1;
             sort_head1 = sort_head1->next;
         } else {
@@ -101,13 +101,13 @@ int cmp7(struct student *A,struct student *B)
 }
 
 //总分
-//int cmp8(struct student *A,struct student *B)
-//{
-//    return A->num - B->num;
-//}
-//
-////平均分
-//int cmp9(struct student *A,struct student *B)
-//{
-//    return A->num - B->num;
-//}
+int cmp8(struct student *A,struct student *B)
+{
+    return (A->sum - B->sum)>0.000001;
+}
+
+//平均分
+int cmp9(struct student *A,struct student *B)
+{
+    return (A->ave - B->ave)>0.000001;
+}

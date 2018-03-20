@@ -406,6 +406,8 @@ void s_Find_tail(void) {
     }
     tail = Tail_cur;
 }
+
+//排序函数
 void s_Sort(void)
 {
     // 1.学号\n2.姓名\n3.性别\n4.民族\n5.语文\n6.数学\n7.英语\n输入‘8’以退出\n");
@@ -418,9 +420,15 @@ void s_Sort(void)
     printf("5.按语文排序\n");
     printf("6.按数学排序\n");
     printf("7.按英语排序\n");
+    printf("8.按总分排序\n");
 
     int sort_choice;
     scanf("%d",&sort_choice);
+    printf("正序:1\n");
+    printf("逆序:0\n");
+    printf("按其他键退出\n");
+    scanf("%d",&sort_order);
+
     int (*sort_p[15])(struct student *A,struct student *B);
     sort_p[1] = cmp1;
     sort_p[2] = cmp2;
@@ -429,6 +437,8 @@ void s_Sort(void)
     sort_p[5] = cmp5;
     sort_p[6] = cmp6;
     sort_p[7] = cmp7;
+    sort_p[8] = cmp8;
+    sort_p[9] = cmp9;
 
     sort_fc_head = sort_p[sort_choice];
 
