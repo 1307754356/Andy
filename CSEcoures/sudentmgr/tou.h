@@ -45,9 +45,26 @@ void s_clear(void);//清空链表
 void s_Output(struct student *Out_stu);//待定
 void s_Search(void);
 void s_Sort(void);
+struct student  *sortList(struct student *sort_head) ;
+struct student  *sortmerge( struct student *sort_head1, struct student *sort_head2);
+
+void s_Find_tail(void);
 void s_Statistic(void);
 void s_Reset(void); //TODO: 修正非法输入
 void s_Help(void);
 void s_Exit(void);
 
+
+int (*sort_fc_head)(struct student *A,struct student *B);
+
 struct student* s_Check(int Check_num);//频繁调用，故另建为函数
+
+int cmp1(struct student *A,struct student *B);
+int cmp2(struct student *A,struct student *B);
+int cmp3(struct student *A,struct student *B);
+int cmp4(struct student *A,struct student *B);
+int cmp5(struct student *A,struct student *B);
+int cmp6(struct student *A,struct student *B);
+int cmp7(struct student *A,struct student *B);
+int cmp8(struct student *A,struct student *B);
+int cmp9(struct student *A,struct student *B);

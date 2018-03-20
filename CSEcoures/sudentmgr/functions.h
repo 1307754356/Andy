@@ -49,8 +49,12 @@ void s_Init(int init_choice) {
         free(prev);
         prev = tail;
         tail ->next = NULL;
-        printf("初始化成功！\n");
+       // printf("初始化成功！\n");
     }
+
+
+    //排序初始化
+
 }
 
 //修改信息
@@ -158,8 +162,8 @@ void s_Add(void) {
         prev = head;
         prev->next = NULL;
     } else {
-        prev->next = (struct student*)malloc(sizeof(struct student));
-        tail = prev;
+        tail->next = (struct student*)malloc(sizeof(struct student));
+        prev = tail;
         prev = prev->next;
         prev->next = NULL;
     }
@@ -196,7 +200,6 @@ void s_Add(void) {
     prev->ave = prev->sum / 3.0;
 
 // rewind(add_file);
-    s_Write(0);
 }
 
 //删除函数
@@ -366,7 +369,7 @@ void s_Reset(void) {
         printf("RESET ERROR!\n");
         exit(0);
     }
-        fwrite(&Back[1],sizeof(struct ROLL),3,reset_file_w);
+    fwrite(&Back[1], sizeof(struct ROLL), 3, reset_file_w);
     fclose(reset_file_w);
 }
 
@@ -376,24 +379,15 @@ void s_clear(void) {
     if(head == NULL)
         return ;
     while( clr_p->next != NULL) {
-        struct student *clr_q = head;
-        clr_p->next = clr_p->next->next;
+        struct student *clr_q = clr_p;
+        clr_p = clr_p->next;
         free(clr_q);
     }
     free(clr_p);
-    head = NULL;
+    clr_p = NULL;
+    head  = NULL;
 }
-void s_Sort(void)
-{
-    printf("排序界面：\n");
-    printf("请选择排序方式：\n");
-    printf("1.按总分排序\n");
-    printf("2.按学号排序\n");
-    printf("3.按姓名排序\n");
-    printf("4.按家庭住址排序\n");
-    printf("5.按学号排序\n");
 
-}
 //检查函数
 struct student* s_Check(int Check_num) {
     struct  student * check_p = head;
@@ -405,6 +399,43 @@ struct student* s_Check(int Check_num) {
     return check_p;
 }
 
+void s_Find_tail(void) {
+    struct student *Tail_cur = head;
+    while(Tail_cur->next != NULL) {
+        Tail_cur = Tail_cur->next;
+    }
+    tail = Tail_cur;
+}
+void s_Sort(void)
+{
+    // 1.学号\n2.姓名\n3.性别\n4.民族\n5.语文\n6.数学\n7.英语\n输入‘8’以退出\n");
+    printf("排序界面：\n");
+    printf("请选择排序方式：\n");
+    printf("1.按学号排序\n");
+    printf("2.按姓名排序\n");
+    printf("3.按性别排序\n");
+    printf("4.按民族排序\n");
+    printf("5.按语文排序\n");
+    printf("6.按数学排序\n");
+    printf("7.按英语排序\n");
+
+    int sort_choice;
+    scanf("%d",&sort_choice);
+    int (*sort_p[15])(struct student *A,struct student *B);
+    sort_p[1] = cmp1;
+    sort_p[2] = cmp2;
+    sort_p[3] = cmp3;
+    sort_p[4] = cmp4;
+    sort_p[5] = cmp5;
+    sort_p[6] = cmp6;
+    sort_p[7] = cmp7;
+
+    sort_fc_head = sort_p[sort_choice];
+
+     head = sortList(head);
+     s_Find_tail();
+     s_Output(head);
+}
 //退出函数
 void s_Exit(void) {
     Exit_flag = 0;
