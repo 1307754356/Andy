@@ -49,7 +49,7 @@ void s_Init(int init_choice) {
         free(prev);
         prev = tail;
         tail ->next = NULL;
-       // printf("初始化成功！\n");
+        // printf("初始化成功！\n");
     }
 
 
@@ -129,6 +129,8 @@ void s_Fix_detail(struct student *stu) {
         case 8:
             return ;
         }
+        stu->sum = stu->score[0] + stu->score[1] + stu->score[2];
+        stu->ave = stu->sum / 3.0;
 
     }
 }
@@ -145,7 +147,6 @@ void s_Output(struct student *Fix_stu) {
     while(Fix_stu != NULL) {
         printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2], Fix_stu->sum, Fix_stu->ave) ;
         Fix_stu = Fix_stu -> next;
-        Out_put_num++;
     }
 
 }
@@ -162,10 +163,11 @@ void s_Add(void) {
         prev = head;
         prev->next = NULL;
     } else {
+// TODO (孔振华#1#): 修正“添加两人会覆盖”的bug
         tail->next = (struct student*)malloc(sizeof(struct student));
-        prev = tail;
-        prev = prev->next;
-        prev->next = NULL;
+        prev = tail->next;
+        tail = tail->next;
+        tail->next = NULL;
     }
     int Add_num, Add_flag = 1;
     while(Add_flag) {
@@ -223,7 +225,6 @@ void s_Del(void) {
                     head = Del_stu->next;
                 } else {
                     struct student *Del_stu_pre = head;
-                    //  struct student *Del_stu_aft = Del
                     while(Del_stu_pre->next != Del_stu) {
                         Del_stu_pre = Del_stu_pre->next;
                     }
@@ -231,7 +232,8 @@ void s_Del(void) {
                     Del_stu ->next = NULL;
                     free(Del_stu);
                 }
-
+// TODO (孔振华#9#): 在修改中添加“修复尾指针”函数
+                s_Find_tail();
                 printf("删除成功！\n");
             }
         }
@@ -358,7 +360,9 @@ void s_Reset(void) {
         int roll_i;
         scanf("%d", &roll_i);
         //printf("您确定要读取存档%d吗？",roll_i);
-        s_clear();
+        s_clear(head);
+        head = NULL;
+        tail = NULL; //这里吧？
         s_Init(roll_i);
         break;
     case 3:
@@ -374,9 +378,10 @@ void s_Reset(void) {
 }
 
 //清空链表
-void s_clear(void) {
-    struct student *clr_p = head;
-    if(head == NULL)
+// TODO (孔振华#9#): 升级了清空列表函数
+void s_clear(struct student *clr_head) {
+    struct student *clr_p = clr_head;
+    if( clr_head == NULL)
         return ;
     while( clr_p->next != NULL) {
         struct student *clr_q = clr_p;
@@ -385,7 +390,7 @@ void s_clear(void) {
     }
     free(clr_p);
     clr_p = NULL;
-    head  = NULL;
+    clr_head  = NULL;
 }
 
 //检查函数
@@ -399,17 +404,17 @@ struct student* s_Check(int Check_num) {
     return check_p;
 }
 
+//修复尾指针
 void s_Find_tail(void) {
     struct student *Tail_cur = head;
-    while(Tail_cur->next != NULL) {
+    while(Tail_cur != NULL && Tail_cur->next != NULL) {
         Tail_cur = Tail_cur->next;
     }
     tail = Tail_cur;
 }
 
 //排序函数
-void s_Sort(void)
-{
+void s_Sort(void) {
     // 1.学号\n2.姓名\n3.性别\n4.民族\n5.语文\n6.数学\n7.英语\n输入‘8’以退出\n");
     printf("排序界面：\n");
     printf("请选择排序方式：\n");
@@ -423,13 +428,13 @@ void s_Sort(void)
     printf("8.按总分排序\n");
 
     int sort_choice;
-    scanf("%d",&sort_choice);
+    scanf("%d", &sort_choice);
     printf("正序:1\n");
     printf("逆序:0\n");
     printf("按其他键退出\n");
-    scanf("%d",&sort_order);
+    scanf("%d", &sort_order);
 
-    int (*sort_p[15])(struct student *A,struct student *B);
+    int (*sort_p[15])(struct student * A, struct student * B);
     sort_p[1] = cmp1;
     sort_p[2] = cmp2;
     sort_p[3] = cmp3;
@@ -442,11 +447,108 @@ void s_Sort(void)
 
     sort_fc_head = sort_p[sort_choice];
 
-     head = sortList(head);
-     s_Find_tail();
-     s_Output(head);
+    head = sortList(head);
+    s_Find_tail();
+    s_Output(head);
 }
+
 //退出函数
 void s_Exit(void) {
     Exit_flag = 0;
 }
+
+//查询函数
+void s_Search(void) {
+    char ch;
+    search_choice = 0;
+    printf("查询方式：\n");
+    printf("1.学号\n2.姓名\n3.性别\n4.民族\n5.语文\n6.数学\n7.英语\n输入‘8’以退出\n");
+    printf("(支持组合查询，可在一行内输入不超过五个排序条件的序号)\n");
+    int search_num = 0;
+    while((ch = getchar()) && ch != '\n') {
+        if(!isdigit(ch))
+            continue;
+        else {
+// TODO (孔振华#1#): 组合查询
+            /*
+            函数应该怎么设计？如何提高代码重用性？
+            数据怎么存储？（数组还是链表？） 链表删除是否太过繁琐？数组删除是否不够彻底？是否可以利用已经写成的代码？
+            另外修改显示函数可以用带参的宏，即设置默认值的方式来进行
+            个数如何统计？
+            如何链接各个函数？ (可以遍历数组，逐次执行命令，可是怎么实现通用性呢)
+            是否加入条件查询？ （语文成绩>=60？
+            还是做成百度搜索那种？（相同的换字体颜色）
+
+            搜索_创建链表
+            搜索_加入元素
+                            在第一次筛选后的即为链表初始元素，之后只有删除，再无添加
+            搜索_删除元素
+
+            */
+            search_choice_arr[search_num] = ch - 48;
+            search_num++;
+        }
+    }
+    search_init();
+    //   s_Output(search_p_head);
+    int search_temp_i;
+    for(search_temp_i = 0; search_temp_i < search_num; search_temp_i++) {
+        //以下两行不用换，已经通用了
+        printf("%d\n", search_choice_arr[search_temp_i]);
+        printf("请输入%s的信息\n", term[search_choice_arr[search_temp_i] - 1]);
+
+        //是否可以将其用atof/atoi 转换？浮点数的比较如何处理？
+        char search_temp[15];
+        struct student *search_p_temp = search_p_head;
+        struct student *search_p_temp_next = search_p_head;
+        gets(search_temp);
+
+        while(search_p_temp != NULL ) {
+            search_p_temp_next = search_p_temp->next;
+            if(strstr(search_p_temp->name, search_temp) == NULL) {
+                search_delete(search_p_temp);
+            }
+            search_p_temp = search_p_temp_next;
+        }
+        s_Output(search_p_head);
+    }
+    s_clear(search_p_head);
+    search_p_head = NULL;
+    search_p_tail = NULL;
+}
+
+void search_delete(struct student *sea_del) {
+    if(sea_del == search_p_head) {
+        search_p_head = search_p_head->next;
+    } else {
+        struct student *sea_del_pre = search_p_head;
+        while(sea_del_pre->next != sea_del) {
+            sea_del_pre = sea_del_pre->next;
+        }
+        sea_del_pre -> next = sea_del -> next;
+        sea_del ->next = NULL;
+        free(sea_del);
+        sea_del = NULL;
+    }
+}
+void search_init(void) {
+    if(head != NULL) {
+        search_p_head = (struct student *)malloc(sizeof(struct student));
+        search_p_tail = search_p_head;
+        memcpy(search_p_head, head, sizeof(struct student));
+        struct student *search_cur = head;
+        struct student *search_add_cur = search_p_head;
+        while(search_cur->next != NULL) {
+            search_cur = search_cur->next;
+            search_add_cur->next = (struct student *)malloc(sizeof(struct student));
+            search_add_cur =  search_add_cur->next;
+            memcpy(search_add_cur, search_cur, sizeof(struct student));
+        }
+        search_add_cur->next = NULL;
+        search_cur->next = NULL;
+        search_p_tail = search_add_cur;
+    } else
+
+        printf("链表为空！！！\n");
+}
+

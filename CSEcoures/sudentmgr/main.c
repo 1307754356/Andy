@@ -30,7 +30,7 @@ int main() {
         case 6:
             s_Del();
             break;
-//        case 5: s_Search();break;
+        case 7: s_Search();break;
 //        case 7: sortList();break;
 //        case 7: s_Statistic();break;
         case 8:

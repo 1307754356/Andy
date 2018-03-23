@@ -1,10 +1,11 @@
 #include<stdio.h>
 #include<string.h>
-#include<stdlib.h>      //sor
+#include<stdlib.h>
 #include<math.h>
 #include<Windows.h>
 #include<conio.h>
 #include<time.h>
+#include<ctype.h>
 #define  NUM 20
 struct student                                 /*定义学生结构体*/
 {
@@ -41,8 +42,10 @@ void s_Add(void);
 void s_Fix(void);
 void s_Fix_detail(struct student *Fix_stu);
 void s_Del(void);
-void s_clear(void);//清空链表
-void s_Output(struct student *Out_stu);//待定
+void s_clear(struct student *clr_head);//清空链表
+
+// TODO (孔振华#1#): 修正此函数，使之更加灵活，为后续查询做准备
+void s_Output(struct student *Out_stu);
 void s_Search(void);
 void s_Sort(void);
 struct student  *sortList(struct student *sort_head) ;
@@ -51,6 +54,9 @@ struct student  *sortmerge( struct student *sort_head1, struct student *sort_hea
 void s_Find_tail(void);
 void s_Statistic(void);
 void s_Reset(void); //TODO: 修正非法输入
+
+
+// TODO (孔振华#1#): 帮助界面该如何设计？
 void s_Help(void);
 void s_Exit(void);
 
@@ -60,6 +66,7 @@ int (*sort_fc_head)(struct student *A,struct student *B);
 int sort_order;
 
 struct student* s_Check(int Check_num);//频繁调用，故另建为函数
+void search_init(void) ;
 
 int cmp1(struct student *A,struct student *B);
 int cmp2(struct student *A,struct student *B);
@@ -70,3 +77,26 @@ int cmp6(struct student *A,struct student *B);
 int cmp7(struct student *A,struct student *B);
 int cmp8(struct student *A,struct student *B);
 int cmp9(struct student *A,struct student *B);
+
+
+struct student *search_p_head = NULL;
+struct student *search_p_tail = NULL;
+
+void search_add(const struct student *search_p_add);
+void search_delete(struct student *search_p_del);
+
+
+int search_choice_arr[6];
+int search_choice;
+
+char  *term[10] = {
+    "学号",
+    "姓名",
+    "性别",
+    "民族",
+    "语文",
+    "数学",
+    "英语",
+    "总分",
+    "平均分",
+};
