@@ -54,8 +54,6 @@ void s_Init(int init_choice) {
     }
 
 
-    //排序初始化
-
 }
 
 //修改信息
@@ -86,7 +84,7 @@ void s_Fix_detail(struct student *stu) {
     scanf("%c", &detail_flag);
     while(detail_flag == 'y' || detail_flag == 'Y') {
         system("cls");
-        s_Output(stu,0);
+        s_Output(stu, 0);
         int detail_choice;
         printf("您可修改以下内容：\n1.学号\n2.姓名\n3.性别\n4.民族\n5.语文\n6.数学\n7.英语\n输入‘8’以退出\n");
         scanf("%d", &detail_choice);
@@ -146,16 +144,18 @@ void s_Output(struct student *Fix_stu, int Out_flag) {
     printf("┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆\n");
     printf("学号       姓名      性别     民族       语文       数学       英语       总分       平均分     \n");
 
-    if(Out_flag) {
+
+    switch(Out_flag) {
+    case 1:
         while(Fix_stu != NULL) {
             printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2], Fix_stu->sum, Fix_stu->ave) ;
             Fix_stu = Fix_stu -> next;
         }
-    }else{
-            printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2], Fix_stu->sum, Fix_stu->ave) ;
+        break;
+    case 0:
+        printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2], Fix_stu->sum, Fix_stu->ave) ;
+        break;
     }
-
-
 }
 
 //添加函数
@@ -452,10 +452,28 @@ void s_Sort(void) {
     head = sortList(head);
     s_Find_tail();
     system("cls");
-    s_Output(head,1);
+    s_Output(head, 1);
     getchar();
 }
 
+void s_Statistic(void) {
+    struct student *sta_cur = head;
+    long long sta_sum0 = 0, sta_num = 0;
+    long long sta_sum1 = 0, sta_sum2 = 0;
+    while(sta_cur != NULL) {
+        sta_num++;
+        sta_sum0 += sta_cur->score[0];
+        sta_sum1 += sta_cur->score[1];
+        sta_sum2 += sta_cur->score[2];
+        sta_cur = sta_cur->next;
+    }
+    printf("统计结果:\n");
+    printf("班级人数: %lld\n",sta_num);
+    printf("语文平均分: %-10.2lf\n",1.0*sta_sum0/sta_num);
+    printf("数学平均分: %-10.2lf\n",1.0*sta_sum1/sta_num);
+    printf("英语平均分: %-10.2lf\n",1.0*sta_sum2/sta_num);
+
+}
 //退出函数
 void s_Exit(void) {
     Exit_flag = 0;
@@ -475,19 +493,8 @@ void s_Search(void) {
         else {
 // TODO (孔振华#1#): 组合查询
             /*
-            函数应该怎么设计？如何提高代码重用性？
-            数据怎么存储？（数组还是链表？） 链表删除是否太过繁琐？数组删除是否不够彻底？是否可以利用已经写成的代码？
-            另外修改显示函数可以用带参的宏，即设置默认值的方式来进行
-            个数如何统计？
-            如何链接各个函数？ (可以遍历数组，逐次执行命令，可是怎么实现通用性呢)
-            是否加入条件查询？ （语文成绩>=60？
-            还是做成百度搜索那种？（相同的换字体颜色）
-
-            搜索_创建链表
-            搜索_加入元素
-                            在第一次筛选后的即为链表初始元素，之后只有删除，再无添加
-            搜索_删除元素
-
+             是否加入条件查询？ （语文成绩>=60？
+             还是做成百度搜索那种？（相同的换字体颜色）
             */
             search_choice_arr[search_num] = ch - 48;
             search_num++;
@@ -514,7 +521,7 @@ void s_Search(void) {
             }
             search_p_temp = search_p_temp_next;
         }
-        s_Output(search_p_head,1);
+        s_Output(search_p_head, 1);
     }
     s_clear(search_p_head);
     search_p_head = NULL;
