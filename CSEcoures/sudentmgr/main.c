@@ -18,7 +18,7 @@ int main() {
             s_Init(0);
             break;
         case 3:
-           s_Sort();
+            s_Sort();
             break;
         case 4:
             s_Output(head);
@@ -30,7 +30,9 @@ int main() {
         case 6:
             s_Del();
             break;
-        case 7: s_Search();break;
+        case 7:
+            s_Search();
+            break;
 //        case 7: sortList();break;
 //        case 7: s_Statistic();break;
         case 8:

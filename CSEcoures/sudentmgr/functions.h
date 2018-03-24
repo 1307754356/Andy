@@ -1,3 +1,5 @@
+#define  NUM 20
+
 //初始化函数
 void s_Init(int init_choice) {
     FILE *init_file;
@@ -144,20 +146,19 @@ void s_Output(struct student *Fix_stu) {
     }
     printf("┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆\n");
     printf("学号       姓名      性别     民族       语文       数学       英语       总分       平均分     \n");
-    while(Fix_stu != NULL) {
-        printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2], Fix_stu->sum, Fix_stu->ave) ;
-        Fix_stu = Fix_stu -> next;
-    }
+
+
+        while(Fix_stu != NULL) {
+            printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2], Fix_stu->sum, Fix_stu->ave) ;
+            Fix_stu = Fix_stu -> next;
+        }
+
 
 }
 
 //添加函数
 void s_Add(void) {
-//    FILE *add_file;
-//    if((add_file = fopen("stu_data.txt", "ab")) == NULL) {
-//        printf("input Error!\n");
-//        exit(0);
-//    }
+
     if(head == NULL) {
         head = (struct student*)malloc(sizeof(struct student));
         prev = head;
@@ -505,12 +506,32 @@ void s_Search(void) {
 
         while(search_p_temp != NULL ) {
             search_p_temp_next = search_p_temp->next;
-            if(strstr(search_p_temp->name, search_temp) == NULL) {
+            if(sea[search_choice_arr[search_temp_i]](search_p_temp, search_temp)) {
                 search_delete(search_p_temp);
             }
             search_p_temp = search_p_temp_next;
         }
         s_Output(search_p_head);
+
+//
+//        printf("%d\n", search_choice_arr[search_temp_i]);
+//        printf("请输入%s的信息\n", term[search_choice_arr[search_temp_i] - 1]);
+//
+//        //是否可以将其用atof/atoi 转换？浮点数的比较如何处理？
+//        search_p_temp = search_p_head;
+//        search_p_temp_next = search_p_head;
+//        gets(search_temp);
+//
+//        while(search_p_temp != NULL ) {
+//            search_p_temp_next = search_p_temp->next;
+//            if(strstr(search_p_temp->name, search_temp) == NULL) {
+//                search_delete(search_p_temp);
+//            }
+//            search_p_temp = search_p_temp_next;
+//        }
+//        s_Output(search_p_head);
+//
+//
     }
     s_clear(search_p_head);
     search_p_head = NULL;
@@ -531,6 +552,7 @@ void search_delete(struct student *sea_del) {
         sea_del = NULL;
     }
 }
+//负责创建查询链表和初始化函数指针
 void search_init(void) {
     if(head != NULL) {
         search_p_head = (struct student *)malloc(sizeof(struct student));
@@ -548,7 +570,15 @@ void search_init(void) {
         search_cur->next = NULL;
         search_p_tail = search_add_cur;
     } else
-
         printf("链表为空！！！\n");
+    sea[1] = sea1;
+    sea[2] = sea2;
+    sea[3] = sea3;
+    sea[4] = sea4;
+    sea[5] = sea5;
+    sea[6] = sea6;
+    sea[7] = sea7;
+    sea[8] = sea8;
+    sea[9] = sea9;
 }
 

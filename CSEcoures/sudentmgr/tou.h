@@ -6,9 +6,8 @@
 #include<conio.h>
 #include<time.h>
 #include<ctype.h>
-#define  NUM 20
-struct student                                 /*定义学生结构体*/
-{
+
+struct student {                               /*定义学生结构体*/
     int  num;                                      //学号
     char name[20] ;                                 //学生姓名
     char sex;                                  //学生性别(刚修改为一个字符)
@@ -20,8 +19,7 @@ struct student                                 /*定义学生结构体*/
     int age;                                        //年龄
     struct student *next;
 };
-struct ROLL
-{
+struct ROLL {
     FILE *roll_back;
     int reset_flag;
     int reset_year;
@@ -30,11 +28,11 @@ struct ROLL
     int reset_hour;
     int reset_min;
     int reset_sec;
-}Back[4];
+} Back[4];
 
-int Exit_flag=1;
+int Exit_flag = 1;
 int Out_put_num;
-struct student *head=NULL,*prev=NULL,*tail=NULL;
+struct student *head = NULL, *prev = NULL, *tail = NULL;
 
 void s_Init(int init_choice);
 void s_Write(int write_choice);
@@ -61,22 +59,22 @@ void s_Help(void);
 void s_Exit(void);
 
 
-int (*sort_fc_head)(struct student *A,struct student *B);
+int (*sort_fc_head)(struct student *A, struct student *B);
 
 int sort_order;
 
 struct student* s_Check(int Check_num);//频繁调用，故另建为函数
 void search_init(void) ;
 
-int cmp1(struct student *A,struct student *B);
-int cmp2(struct student *A,struct student *B);
-int cmp3(struct student *A,struct student *B);
-int cmp4(struct student *A,struct student *B);
-int cmp5(struct student *A,struct student *B);
-int cmp6(struct student *A,struct student *B);
-int cmp7(struct student *A,struct student *B);
-int cmp8(struct student *A,struct student *B);
-int cmp9(struct student *A,struct student *B);
+int cmp1(struct student *A, struct student *B);
+int cmp2(struct student *A, struct student *B);
+int cmp3(struct student *A, struct student *B);
+int cmp4(struct student *A, struct student *B);
+int cmp5(struct student *A, struct student *B);
+int cmp6(struct student *A, struct student *B);
+int cmp7(struct student *A, struct student *B);
+int cmp8(struct student *A, struct student *B);
+int cmp9(struct student *A, struct student *B);
 
 
 struct student *search_p_head = NULL;
@@ -88,6 +86,69 @@ void search_delete(struct student *search_p_del);
 
 int search_choice_arr[6];
 int search_choice;
+
+int(*sea[9])(struct student *sea_cur,const char *s);
+
+
+int sea1(struct student *sea_cur,const char *s)
+{
+    char sea_num[15];
+    itoa(sea_cur->num,sea_num,10);
+	return strstr(sea_num, s) == NULL;
+}
+
+int sea2(struct student *sea_cur,const char *s)
+{
+	return strstr(sea_cur->name, s) == NULL;
+}
+
+int sea3(struct student *sea_cur,const char *s)
+{
+    char sea_sex[15];
+    sprintf(sea_sex,"%c",sea_cur->sex);
+	return strstr(sea_sex, s) == NULL;
+}
+
+int sea4(struct student *sea_cur,const char *s)
+{
+
+	return strstr(sea_cur->minzu, s) == NULL;
+}
+
+int sea5(struct student *sea_cur,const char *s)
+{
+    char sea_score0[15];
+    sprintf(sea_score0,"%-10.2lf",sea_cur->score[0]);
+	return strstr(sea_score0, s) == NULL;
+}
+
+int sea6(struct student *sea_cur,const char *s)
+{
+    char sea_score1[15];
+    sprintf(sea_score1,"%-10.2lf",sea_cur->score[1]);
+	return strstr(sea_score1, s) == NULL;
+}
+
+int sea7(struct student *sea_cur,const char *s)
+{
+    char sea_score2[15];
+    sprintf(sea_score2,"%-10.2lf",sea_cur->score[2]);
+	return strstr(sea_score2, s) == NULL;
+}
+
+int sea8(struct student *sea_cur,const char *s)
+{
+    char sea_sum[15];
+    sprintf(sea_sum,"%-10.2lf",sea_cur->sum);
+	return strstr(sea_sum, s) == NULL;
+}
+
+int sea9(struct student *sea_cur,const char *s)
+{
+    char sea_ave[15];
+    sprintf(sea_ave,"%-10.2lf",sea_cur->ave);
+	return strstr(sea_ave, s) == NULL;
+}
 
 char  *term[10] = {
     "学号",

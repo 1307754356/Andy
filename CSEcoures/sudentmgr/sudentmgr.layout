@@ -2,25 +2,9 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1073" topLine="26" />
-		</Cursor>
-	</File>
-	<File name="tou.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2562" topLine="66" />
-		</Cursor>
-	</File>
-	<File name="functions.h" open="1" top="1" tabpos="3" split="2" active="1" splitpos="862" zoom_1="-2" zoom_2="-2">
-		<Cursor>
-			<Cursor1 position="15590" topLine="473" />
-			<Cursor2 position="1540" topLine="24" />
-		</Cursor>
-	</File>
 	<File name="mergesort.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1892" topLine="18" />
+			<Cursor1 position="1890" topLine="20" />
 		</Cursor>
 		<Folding>
 			<Collapse line="1" />
@@ -30,14 +14,21 @@
 			<Collapse line="31" />
 			<Collapse line="41" />
 			<Collapse line="42" />
-			<Collapse line="68" />
-			<Collapse line="74" />
-			<Collapse line="80" />
-			<Collapse line="86" />
-			<Collapse line="92" />
-			<Collapse line="98" />
-			<Collapse line="104" />
-			<Collapse line="110" />
 		</Folding>
+	</File>
+	<File name="functions.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="862" zoom_1="-2" zoom_2="-2">
+		<Cursor>
+			<Cursor1 position="5051" topLine="136" />
+		</Cursor>
+	</File>
+	<File name="tou.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1483" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="324" topLine="0" />
+		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
