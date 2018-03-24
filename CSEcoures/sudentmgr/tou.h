@@ -43,7 +43,7 @@ void s_Del(void);
 void s_clear(struct student *clr_head);//清空链表
 
 // TODO (孔振华#1#): 修正此函数，使之更加灵活，为后续查询做准备
-void s_Output(struct student *Out_stu);
+void s_Output(struct student *Out_stu, int Out_flag);
 void s_Search(void);
 void s_Sort(void);
 struct student  *sortList(struct student *sort_head) ;

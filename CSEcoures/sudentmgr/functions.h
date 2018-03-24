@@ -1,4 +1,3 @@
-#define  NUM 20
 
 //初始化函数
 void s_Init(int init_choice) {
@@ -87,7 +86,7 @@ void s_Fix_detail(struct student *stu) {
     scanf("%c", &detail_flag);
     while(detail_flag == 'y' || detail_flag == 'Y') {
         system("cls");
-        s_Output(stu);
+        s_Output(stu,0);
         int detail_choice;
         printf("您可修改以下内容：\n1.学号\n2.姓名\n3.性别\n4.民族\n5.语文\n6.数学\n7.英语\n输入‘8’以退出\n");
         scanf("%d", &detail_choice);
@@ -138,7 +137,7 @@ void s_Fix_detail(struct student *stu) {
 }
 
 //打印函数
-void s_Output(struct student *Fix_stu) {
+void s_Output(struct student *Fix_stu, int Out_flag) {
     //后续添加另一个参数以输出表头表尾
     if(Fix_stu == NULL) {
         printf("信息为空！\n");
@@ -147,11 +146,14 @@ void s_Output(struct student *Fix_stu) {
     printf("┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆┈━═┈━═┈━═┈━═┈━═☆\n");
     printf("学号       姓名      性别     民族       语文       数学       英语       总分       平均分     \n");
 
-
+    if(Out_flag) {
         while(Fix_stu != NULL) {
             printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2], Fix_stu->sum, Fix_stu->ave) ;
             Fix_stu = Fix_stu -> next;
         }
+    }else{
+            printf("%-10d %-9s %c        %-10s %-10.2lf %-10.2lf %-10.2lf %-10.2lf %-10.2lf \n", Fix_stu->num, Fix_stu->name, Fix_stu->sex, Fix_stu->minzu, Fix_stu->score[0], Fix_stu->score[1], Fix_stu->score[2], Fix_stu->sum, Fix_stu->ave) ;
+    }
 
 
 }
@@ -447,10 +449,11 @@ void s_Sort(void) {
     sort_p[9] = cmp9;
 
     sort_fc_head = sort_p[sort_choice];
-
     head = sortList(head);
     s_Find_tail();
-    s_Output(head);
+    system("cls");
+    s_Output(head,1);
+    getchar();
 }
 
 //退出函数
@@ -511,27 +514,7 @@ void s_Search(void) {
             }
             search_p_temp = search_p_temp_next;
         }
-        s_Output(search_p_head);
-
-//
-//        printf("%d\n", search_choice_arr[search_temp_i]);
-//        printf("请输入%s的信息\n", term[search_choice_arr[search_temp_i] - 1]);
-//
-//        //是否可以将其用atof/atoi 转换？浮点数的比较如何处理？
-//        search_p_temp = search_p_head;
-//        search_p_temp_next = search_p_head;
-//        gets(search_temp);
-//
-//        while(search_p_temp != NULL ) {
-//            search_p_temp_next = search_p_temp->next;
-//            if(strstr(search_p_temp->name, search_temp) == NULL) {
-//                search_delete(search_p_temp);
-//            }
-//            search_p_temp = search_p_temp_next;
-//        }
-//        s_Output(search_p_head);
-//
-//
+        s_Output(search_p_head,1);
     }
     s_clear(search_p_head);
     search_p_head = NULL;

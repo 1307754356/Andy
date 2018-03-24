@@ -21,8 +21,7 @@ int main() {
             s_Sort();
             break;
         case 4:
-            s_Output(head);
-            //printf("%d\n", Out_put_num);
+            s_Output(head,1);
             break;//目前先打印全部
         case 5:
             s_Fix();
@@ -33,7 +32,6 @@ int main() {
         case 7:
             s_Search();
             break;
-//        case 7: sortList();break;
 //        case 7: s_Statistic();break;
         case 8:
             s_Reset();
