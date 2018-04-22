@@ -460,18 +460,29 @@ void s_Statistic(void) {
     struct student *sta_cur = head;
     long long sta_sum0 = 0, sta_num = 0;
     long long sta_sum1 = 0, sta_sum2 = 0;
+    long long sta_gua_num = 0;
     while(sta_cur != NULL) {
         sta_num++;
         sta_sum0 += sta_cur->score[0];
+        if(sta_cur->score[0]<60)
+            sta_gua_num++;
+
         sta_sum1 += sta_cur->score[1];
+        if(sta_cur->score[1]<60)
+            sta_gua_num++;
+
         sta_sum2 += sta_cur->score[2];
+        if(sta_cur->score[2]<60)
+            sta_gua_num++;
+
         sta_cur = sta_cur->next;
     }
-    printf("统计结果:\n");
-    printf("班级人数: %lld\n",sta_num);
-    printf("语文平均分: %-10.2lf\n",1.0*sta_sum0/sta_num);
-    printf("数学平均分: %-10.2lf\n",1.0*sta_sum1/sta_num);
-    printf("英语平均分: %-10.2lf\n",1.0*sta_sum2/sta_num);
+    printf("\n\n\n\t\t\t统计结果:\n");
+    printf("\t\t\t班级人数: %lld\n",sta_num);
+    printf("\t\t\t语文平均分: %-10.2lf\n",1.0*sta_sum0/sta_num);
+    printf("\t\t\t数学平均分: %-10.2lf\n",1.0*sta_sum1/sta_num);
+    printf("\t\t\t英语平均分: %-10.2lf\n",1.0*sta_sum2/sta_num);
+    printf("\t\t\t挂科率: %-4.1lf%%\n",100*sta_gua_num/3.0/sta_num);
 
 }
 //退出函数

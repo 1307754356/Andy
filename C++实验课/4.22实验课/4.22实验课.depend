@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1524366439 source:c:\code practise\second\4.22实验课\main.cpp
+	"CPU.h"
+
+1524366717 c:\code practise\second\4.22实验课\cpu.h
+	<iostream>
+
