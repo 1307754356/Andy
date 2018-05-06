@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1525565917 source:c:\code practise\second\4.26实验课\main.cpp
+	"Employee.h"
+
+1525565691 c:\code practise\second\4.26实验课\employee.h
+	<iostream>
+	<string>
+
